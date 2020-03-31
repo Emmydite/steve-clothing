@@ -11,20 +11,15 @@ import {auth, createUserProfileDocument} from './firebase/firebase.utils';
 import {setCurrentUser} from './redux/user/user.actions';
 import {selectCurrentUser } from './redux/user/user.selectors';
 import './App.css';
+//import {selectCollectionsForPreview} from './redux/shop/shop.selectors';
 
 class App extends React.Component {
-
-  //  constructor(){
-  //    super();
-
-  //    this.state= {
-  //      currentUser : null
-  //    }
-  //  }
 
 unsubscribeFromAuth = null;
 
 componentDidMount(){
+
+
 
   const {setCurrentUser} = this.props;
 
@@ -43,6 +38,7 @@ componentDidMount(){
     }
 
     setCurrentUser(userAuth);
+    // addCollectionAndDocuments('collections', collectionsArray.map(({title, items}) => ({title, items})))
   });
 }
 
@@ -70,6 +66,7 @@ componentWillUnmount(){
   }
 
 }
+
 
 const mapStateToProps = createStructuredSelector ({
   currentUser : selectCurrentUser
