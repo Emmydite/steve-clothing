@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
@@ -14,41 +14,12 @@ import {checkUserSession} from './redux/user/user.actions';
 import './App.css';
 //import {selectCollectionsForPreview} from './redux/shop/shop.selectors';
 
-class App extends React.Component {
+const App = ({checkUserSession, currentUser}) => {
 
-unsubscribeFromAuth = null;
+  useEffect(() => {
+    checkUserSession();
+  }, [checkUserSession]);
 
-componentDidMount(){
-
-const {checkUserSession} = this.props;
-checkUserSession();
-
-  //const {setCurrentUser} = this.props;
-
-  // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-  //   if(userAuth){
-  //     const userRef = await createUserProfileDocument(userAuth);
-
-  //     userRef.onSnapshot(snapShot => {
-  //      setCurrentUser({   
-  //           id: snapShot.id,
-  //           ...snapShot.data()
-  //       });
-
-  //     });
-      
-  //   }
-
-  //   setCurrentUser(userAuth);
-    // addCollectionAndDocuments('collections', collectionsArray.map(({title, items}) => ({title, items})))
-  //});
-}
-
-componentWillUnmount(){
-  this.unsubscribeFromAuth();
-}
-
-  render(){
     return (
       <div>
         <Header/>
@@ -60,14 +31,13 @@ componentWillUnmount(){
            exact 
            path='/signin' 
            render={()=> 
-            this.props.currentUser ? (<Redirect to='/' />) 
+            currentUser ? (<Redirect to='/' />) 
             : (<SignInAndSignUpPage />)}/>
         </Switch>
       </div>
     );
   }
 
-}
 
 
 const mapStateToProps = createStructuredSelector ({
